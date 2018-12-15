@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+ 
+<head>
+
+	<title>Canvas Follow Mouse</title>
+	
+		<style>
+			canvas {
+			border: #333 10px solid;
+			}
+			 
+			body {
+			padding: 50px;
+			}
+		</style>
+</head>
+
+ 
+<body>
+
+	<canvas id="myCanvas" width="500px" height="500px"></canvas>
+ 
+		<script>
+			
+		
+			
+			var canvas = document.querySelector("#myCanvas");
+			var context = canvas.getContext("2d");
+			
+			
+						
+			var canvasPos = getPosition(myCanvas); //set a variable that is equal to the coordinates of the canvas called myCanvas
+			var mouseX = 0; //Variable to be used to track the mouse position on the X axis
+			var mouseY = 0; //Variable to be used to track the mouse position on the Y axis
+			
+			//Set other variables
+			
+			var sqSize = 50; //variable to set square sizes
+			var xPos = 500; //variable to be used to place the npc
+			var yPos = 500; //variable to be used to place the npc
+			var dX = 0;	//variable to be used for the distance of the npc from the player on the x axis
+			var dY = 0; //variable to be used for the distance of the npc from the player on the y axis
+			
+			
+			
+		setInterval(onTimerTick, 33); //sets a delay of 33 milliseconds and links it to the function, onTimerTick (repeats every 33 milliseconds)
+			
+			function onTimerTick() { //defines the function called OnTimerTick
+			
+	
+			
+				var lives = 3; //set the internal variable of the players lives to 3
+				
+				canvas.width = canvas.width; // resets the canvas width, forcing an update therefore clearing the canvas
+			
+				var object1 = {x:75, y:75, width:50, height:50 }; //defines the dimentions and position for object 1, can be called upon later
+				
+			
+			
+				
+				//draw co-ordinates of text
+				context.fillStyle = "Red"; //makes the text red
+				context.font="18px sans-serif"; //defines the font and the size
+				context.fillText("Mouse ("+mouseX+","+mouseY+")", 10, 20); //prints the text, prints the value of the two defined variables and defines the co-ordinates to print
+				context.fillText("Lives = ("+lives+")", 180, 20); //prints the text, prints the value of the defined variable and defines the co-ordinates to print
+				
+				
+				
+	 
+				//Draw the player and follow the mouse
+				context.fillStyle = "green"; //draws a rectangle whos colour is determined by if collision is true or false
+				context.fillRect(object1.x,object1.y,object1.width,object1.height); //draws a rectangle with the pre-defined dimentions and the pre-defined co-ordiantes
+				
+			}
+			
+			
+			
+			
+			//Set the mouse position within the canvas
+		
+			function getPosition(el) { //el refers to element
+			
+				var xPosition = 0; //set these two variables to 0, to be changed later
+				var yPosition = 0; // -- 
+			 
+				while (el) { //el refers to element
+					xPosition += (el.offsetLeft - el.scrollLeft + el.clientLeft); //sets the value xPosition and fixing the position inside the canvas by subtracting the vlue of any margins and the scrollbar if presnt
+					yPosition += (el.offsetTop - el.scrollTop + el.clientTop); //sets the value xPosition and fixing the position inside the canvas by subtracting the vlue of any margins and the scrollbar if presnt
+					el = el.offsetParent;
+				}
+				return {
+					x: xPosition, //return these values when the function is called
+					y: yPosition, //--
+				};
+			}   
+
+
+		</script>
+ 
+</body>
+ 
+</html>
